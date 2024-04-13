@@ -1,0 +1,159 @@
+DATA DICTIONARY FOR THE PROJECT LIBRARY MANAGEMENT SYSTEM
+This document serves as a comprehensive guide to the structure, format, and meaning of the data elements utilized in our project. A data dictionary is an essential tool for understanding the database schema and facilitating effective communication among team members, stakeholders, and users. In this document, you will find detailed descriptions of the tables, fields, and attributes involved in our project's database, along with their respective data types and constraints. This data dictionary aims to provide clarity and ensure consistency in data management and interpretation throughout the project lifecycle.
+1. Table Name: Book
+bookName
+•	Description: The name of the book.
+•	Type: String
+•	Required: Yes
+alternateTitle
+•	Description: An alternate title of the book (if any).
+•	Type: String
+•	Default: ""
+Author
+•	Description: The author of the book.
+•	Type: String
+•	Required: Yes
+Language
+•	Description: The language of the book.
+•	Type: String
+•	Default: ""
+Publisher
+•	Description: The publisher of the book.
+•	Type: String
+•	*Default: ""
+ bookCountAvailable
+•	Description: The count of available copies of the book.
+•	Type: Number
+•	Required: Yes
+bookStatus
+•	Description: The status of the book (e.g., Available, Reserved, etc.).
+•	Type: String
+•	Default: "Available
+categories
+•	Description: The categories to which the book belongs.
+•	Type: Array of ObjectIds referencing "BookCategory" table
+Transactions
+•	Description: The transactions related to the book (e.g., borrow, return).
+•	Type: Array of ObjectIds referencing "BookTransaction" table
+createdAt
+•	Description: The timestamp when the book record was created.
+•	Type: Date
+updatedAt
+•	Description: The timestamp when the book record was last updated.
+•	Type: Date
+
+2. Table Name: BookTransaction
+bookId
+•	Description: The ID of the book involved in the transaction.
+•	Type: String
+•	Required: Yes
+borrowerId
+•	Description: The ID of the borrower (e.g., EmployeeId or AdmissionId).
+•	Type: String
+•	Required: Yes
+bookName
+•	Description: The name of the book involved in the transaction.
+•	Type: String
+•	Required: Yes
+borrowerName
+•	Description: The name of the borrower.
+•	Type: String
+•	Required: Yes
+transactionType
+•	Description: The type of transaction (e.g., Issue or Reservation).
+•	Type: String
+•	Required: Yes
+fromDate
+•	Description: The start date of the transaction.
+•	Type: String
+•	Required: Yes
+toDate
+•	Description: The end date of the transaction.
+•	Type: String
+•	Required: Yes
+returnDate
+•	Description: The date when the book was returned (if applicable).
+•	Type: String
+transactionStatus
+•	Description: The status of the transaction (e.g., Active, Returned).
+•	Type: String
+•	Default: "Active"
+createdAt
+•	Description: The timestamp when the transaction record was created.
+•	Type: Date
+updatedAt
+•	Description: The timestamp when the transaction record was last updated.
+•	Type: Date
+3. Table Name: User
+userType
+•	Description: The type of user (e.g., student, employee).
+•	Type: String
+•	Required: Yes
+userFullName
+•	Description: The full name of the user.
+•	Type: String
+•	Required: Yes
+•	Unique: Yes
+admissionId
+•	Description: The admission ID of the user (if applicable).
+•	Type: String
+•	Min Length: 3 characters
+•	Max Length: 15 characters
+employeeId
+•	Description: The employee ID of the user (if applicable).
+•	Type: String
+•	Min Length: 3 characters
+•	Max Length: 15 characters
+age
+•	Description: The age of the user.
+•	Type: Number
+gender
+•	Description: The gender of the user.
+•	Type: String
+dob
+•	Description: The date of birth of the user.
+•	Type: String
+address
+•	Description: The address of the user.
+•	Type: String
+•	Default: ""
+mobileNumber
+•	Description: The mobile number of the user.
+•	Type: Number
+•	Required: Yes
+photo
+•	Description: The photo URL of the user.
+•	Type: String
+•	Default: ""
+Email
+•	Description: The email address of the user.
+•	Type: String
+•	Required: Yes
+•	Max Length: 50 characters
+•	Unique: Yes
+password
+•	Description: The password of the user.
+•	Type: String
+•	Required: Yes
+•	Min Length: 6 characters
+points
+•	Description: The points earned by the user.
+•	Type: Number
+•	Default: 0
+activeTransactions
+•	Description: The active transactions associated with the user.
+•	Type: Array of ObjectIds referencing "BookTransaction" table
+prevTransactions
+•	Description: The previous transactions associated with the user.
+•	Type: Array of ObjectIds referencing "BookTransaction" table
+isAdmin
+•	Description: Indicates whether the user is an admin or not.
+•	Type: Boolean
+•	Default: false
+createdAt
+•	Description: The timestamp when the user record was created.
+•	Type: Date
+updatedAt
+•	Description: The timestamp when the user record was last updated.
+•	Type: Date
+
