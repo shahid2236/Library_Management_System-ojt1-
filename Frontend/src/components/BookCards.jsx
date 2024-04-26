@@ -39,7 +39,7 @@ const BookCards = ({ book }) => {
           <p>Author: {book.author}</p>
           <p>Book ID: {book.book_id}</p>
           <div className="book-card__buttons">
-            <button onClick={handleUpdateClick}>Update333</button>
+            <button onClick={handleUpdateClick}>Update</button>
             <button className="book-card__buttons--del" onClick={() => handleDelete(book.no)}>
               Delete
             </button>
