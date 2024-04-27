@@ -120,6 +120,47 @@ const getPublicIdFromUrl = (url) => {
     return matchStatus ? matchStatus[1] : null;
 };
 
+
+
+
+// router.delete("/studentData/:id", async (request, response) => {
+//     let id = request.params.id;
+//     if (id < 10) {
+//         id = "00" + id;
+//     }
+//     else if (id < 100) {
+//         id = "0" + id;
+//     }
+//     else {
+//         id = "" + id;
+//     }
+
+//     // console.log("id=",id)
+
+//     const studentData = await StudentDetails.find({ 'id': id });
+
+//     const publicId = getPublicIdFromUrl(studentData[0].profilePicture);
+
+//     cloudinary.v2.api
+//         .delete_resources([publicId],
+//             { type: 'upload', resource_type: 'image' });
+
+//         const arr = studentData[0].books_issued;
+//         // console.log(arr);
+        
+
+//         for(let i=0;i<arr.length;i++) {
+//             const increaseQuantityResponse = await BookDetails.updateOne({'book_id':arr[i].book_id},{$inc:{'quantity':1,'copies_issued':-1},$pull:{"students_info":{'id':id}}});
+//             // console.log(arr.book_id," ",id," ",increaseQuantityResponse);
+//         }
+
+
+//     await StudentDetails.deleteOne({ 'id': id });
+
+
+//     response.sendStatus(200);
+// })
+
 router.delete("/studentData/:id", async (request, response) => {
     let id = request.params.id;
     if (id < 10) {
@@ -132,31 +173,40 @@ router.delete("/studentData/:id", async (request, response) => {
         id = "" + id;
     }
 
-    // console.log("id=",id)
+    try {
+        const studentData = await StudentDetails.find({ 'id': id });
 
-    const studentData = await StudentDetails.find({ 'id': id });
-
-    const publicId = getPublicIdFromUrl(studentData[0].profilePicture);
-
-    cloudinary.v2.api
-        .delete_resources([publicId],
-            { type: 'upload', resource_type: 'image' });
-
-        const arr = studentData[0].books_issued;
-        // console.log(arr);
-        
-
-        for(let i=0;i<arr.length;i++) {
-            const increaseQuantityResponse = await BookDetails.updateOne({'book_id':arr[i].book_id},{$inc:{'quantity':1,'copies_issued':-1},$pull:{"students_info":{'id':id}}});
-            // console.log(arr.book_id," ",id," ",increaseQuantityResponse);
+        if (studentData.length === 0) {
+            // If no student data found, send an appropriate response
+            return response.status(404).send("Student data not found");
         }
 
+        const publicId = getPublicIdFromUrl(studentData[0].profilePicture);
 
-    await StudentDetails.deleteOne({ 'id': id });
+        // Delete the image from cloudinary
+        cloudinary.v2.api.delete_resources([publicId], { type: 'upload', resource_type: 'image' });
+
+        const arr = studentData[0].books_issued;
+
+        for (let i = 0; i < arr.length; i++) {
+            const increaseQuantityResponse = await BookDetails.updateOne(
+                { 'book_id': arr[i].book_id },
+                { $inc: { 'quantity': 1, 'copies_issued': -1 }, $pull: { "students_info": { 'id': id } } }
+            );
+        }
+
+        // Delete the student data from the database
+        await StudentDetails.deleteOne({ 'id': id });
+
+        response.sendStatus(200);
+    } catch (error) {
+        console.error("Error:", error);
+        response.status(500).send("Internal Server Error");
+    }
+});
 
 
-    response.sendStatus(200);
-})
+
 
 router.delete("/studentData/BookDelete/:_id/:book_id",async (request,response)=>{
     // console.log(request.params)
