@@ -129,7 +129,7 @@ The "Books" button navigates users to the book management section,
 allowing them to browse, search, and manage the library's collection.
 
 ## Book Details:
-![Image 2](./readme_images/bookDetails.png)
+![Image 2](./readme_images/bookss.png)
 Description: The books available in the library are listed here.
 
 ## Users Section:
