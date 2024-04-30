@@ -70,8 +70,6 @@ router.post("/bookData", uploader.single("file"), async (request, response) => {
 })
 
 
-
-
 router.post("/bookDataAll", async (request, response) => {
     // const LoginUser = await Login.findOne();
     const obj = [...request.body];

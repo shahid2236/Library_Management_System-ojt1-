@@ -112,6 +112,7 @@ const Students = () => {
     window.location.reload();
   };
 
+
   return (
     <div className="studentPageContainer">
       <StudentContext.Provider value={studentSearch}>
@@ -140,6 +141,8 @@ const Students = () => {
           </div>
         )}
       </div>
+
+
 
       <div className="pagination-container">
         <ul className="pagination-container__paginationWidget">
