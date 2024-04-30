@@ -12,7 +12,7 @@ Welcome to the BookNest README! BookNest is an exemplary web project developed b
 
 ## Visit Documentation
 
-[Documentation](#)
+[Documentation](./readme_images/documentation.pdf)
 
 ## Visit Presentation
 
@@ -102,7 +102,7 @@ Welcome to the BookNest README! BookNest is an exemplary web project developed b
 - **Frontend**: Vercel, PORT = 5173
 - **Backend**: Render, PORT = 3001
 
-For additional information, visit the [website](https://booknest.vercel.app/) • [documentation](#) • [presentation](#).
+For additional information, visit the [website](https://booknest.vercel.app/) • [documentation](./readme_images/documentation.pdf) • [presentation](#).
 
 --- 
 
